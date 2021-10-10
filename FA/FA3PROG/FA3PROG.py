@@ -28,9 +28,10 @@ def aantal_kluizen_vrij():
         int: Het aantal vrije kluizen.
     """
     aantalKluizenFile = open('FA\FA3PROG\kluizen.txt', 'r')
-    aantalKluizen = len(aantalKluizenFile.readlines())
-    print(aantalKluizen)
-    return
+    aantalKluizenVrij = 12 - len(aantalKluizenFile.readlines())
+    print(f"Er zijn {aantalKluizenVrij} vrij")
+
+    return int(aantalKluizenVrij)
 
 
 def nieuwe_kluis():
@@ -89,6 +90,8 @@ def development_code():
         keuze = int(input("Ongeldige waarde, voer uw keuze opnieuw in: "))
     elif keuze == 1:
         aantal_kluizen_vrij()
+    elif keuze == 2:
+        nieuwe_kluis()
 
 def module_runner():
     development_code()  # Comment deze regel om je 'development_code' uit te schakelen
