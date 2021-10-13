@@ -29,9 +29,9 @@ def aantal_kluizen_vrij():
     """
     aantalKluizenFile = open('FA\FA3PROG\kluizen.txt', 'r')
     aantalKluizenVrij = 12 - len(aantalKluizenFile.readlines())
-    print(f"Er zijn {aantalKluizenVrij} vrij")
+    aantalKluizenFile.close()
 
-    return int(aantalKluizenVrij)
+    return aantalKluizenVrij
 
 
 def nieuwe_kluis():
@@ -48,6 +48,46 @@ def nieuwe_kluis():
     Returns:
         int: het toegekende kluisnummer of foutcode -1 of -2
     """
+    aantalKluizen = aantal_kluizen_vrij()
+    if  aantalKluizen > 0 and aantalKluizen <= 12:
+        kluisCode = input("Voer een geldige kluis code in aub: ")
+        
+        if len(kluisCode) < 4 or ';' in kluisCode: 
+            return -1
+        
+        kluizenRead = open('FA\FA3PROG\kluizen.txt', 'r')
+        kluizen = kluizenRead.readlines() 
+        kluizenRead.close()
+        
+        if len(kluizen) > 0:
+            
+            allKluizen = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+           
+            for kluis in kluizen:
+                numbers = kluis.split(';') 
+
+                if  numbers[0] in allKluizen:            
+                    allKluizen.remove(numbers[0])
+
+                newIndex = allKluizen[0]
+                print(newIndex)
+                if newIndex < 12:    
+                    newIndex = len(kluizen) - 1
+                    kluizenWrite = open('FA\FA3PROG\kluizen.txt', 'a')
+                    kluizenWrite.write(f'{newIndex};{kluisCode}\n')
+                    return int(newIndex)
+                elif newIndex == 12:
+                    newIndex = len(kluizen)
+                    kluizenWrite = open('FA\FA3PROG\kluizen.txt', 'a')
+                    kluizenWrite.write(f'{newIndex};{kluisCode}')
+                    return int(newIndex)
+                        
+        elif len(kluizen) == 0:
+                kluizenWrite = open('FA\FA3PROG\kluizen.txt', 'a')
+                kluizenWrite.write(f'1;{kluisCode}\n')
+                
+    elif aantalKluizen == 0:
+        return -2
 
     return
 
@@ -60,6 +100,20 @@ def kluis_openen():
     Returns:
         bool: True als de ingevoerde combinatie correct is, anders False
     """
+    kluisNummer = input('Voer het kluisnummer in: ')
+    wachtwoord = input('Voer het bijbehorende wachtwoord in: ')
+
+    correct = f'{kluisNummer};{wachtwoord}\n'
+
+    check = open('FA\FA3PROG\kluizen.txt', 'r')
+    checkCombo = check.readlines()
+        
+    if correct in checkCombo:
+        return True
+
+    elif correct not in checkCombo:
+        return False
+    
     return
 
 
@@ -74,6 +128,23 @@ def kluis_teruggeven():
     Returns:
         bool: True als er een kluiscombinatie verwijderd werd, anders False
     """
+    kluisNummer = input('Voer het kluisnummer in: ')
+    wachtwoord = input('Voer het bijbehorende wachtwoord in: ')
+
+    correct = f'{kluisNummer};{wachtwoord}\n'
+
+    check = open('FA\FA3PROG\kluizen.txt', 'r')
+    checkCombo = check.read()
+    check.close()
+    if correct in checkCombo:
+        check = open('FA\FA3PROG\kluizen.txt', 'w')
+        newText = checkCombo.replace(correct, "")
+        check.write(newText)
+        return True
+
+    elif correct not in checkCombo:
+        return False
+
     return
 
 
@@ -84,18 +155,22 @@ def development_code():
     print("3: Ik wil even iets uit mijn kluis halen ")
     print("4: Ik geef mijn kluis terug")
 
-    keuze = int(input("Uw keuze: "))
+    keuze = int(input("Voer uw keuze in: "))
 
     if keuze not in [1, 2, 3, 4]:
         keuze = int(input("Ongeldige waarde, voer uw keuze opnieuw in: "))
     elif keuze == 1:
-        aantal_kluizen_vrij()
+         print(f"Er zijn {aantal_kluizen_vrij()} vrij")
+
     elif keuze == 2:
         nieuwe_kluis()
 
+    elif keuze == 3:
+        kluis_openen()
+
 def module_runner():
     development_code()  # Comment deze regel om je 'development_code' uit te schakelen
-    __run_tests()       # Comment deze regel om de HU-tests uit te schakelen
+    #__run_tests()       # Comment deze regel om de HU-tests uit te schakelen
 
 
 """
@@ -296,9 +371,9 @@ def test_kluis_teruggeven():
 
 def __run_tests():
     """ Test alle functies. """
-    test_functions = [test_aantal_kluizen_vrij,
+    test_functions = [#test_aantal_kluizen_vrij,
                       test_nieuwe_kluis,
-                      test_kluis_openen,
+                     # test_kluis_openen,
                       # Uncomment de regel hieronder om ook de optionele functie kluis_teruggeven te testen:
                       #test_kluis_teruggeven
                      ]

@@ -1,2 +1,4 @@
-1 rij
-nog een rij
+1;hallohallo
+0;hallohallo
+1;hallohallo
+2;hallohallo
