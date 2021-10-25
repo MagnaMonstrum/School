@@ -1,3 +1,5 @@
+import tweetDict
+
 def userMsg():
   stationName = input('voer naam van het station in: ')
   msg = input('voer een bericht in: ')
