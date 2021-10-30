@@ -1,20 +1,3 @@
-bericht = {
-     "ID":"",
-     "reizigerID":"",
-     "moderatorID":"",
-     "opmerking":"",
-     "inhoud":"",
-     "datum":"",
-     "tijd":"",
-}
-
-
-
-
-
-
-
-
 # reiziger = {
 #     "kaartnummer":"",
 #     "naam":"",
@@ -48,4 +31,3 @@ bericht = {
 #     "locatie":"",
 #     "schermen":"",
 # }
-

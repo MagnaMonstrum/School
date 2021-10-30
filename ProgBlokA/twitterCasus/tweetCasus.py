@@ -1,4 +1,4 @@
-import tweetDict
+from tweetDict import bericht
 
 def userMsg():
   stationName = input('voer naam van het station in: ')
@@ -12,15 +12,18 @@ def userMsg():
   if name == '':
       name = 'anoniem'
 
-  newMsg = open("ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'w')
-
+  newMsg = open("SchoolHU1/ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'w')
+  tweet = open("SchoolHU1/ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'w')
+  tweet.write(bericht)
+  bericht.update({"inhoud":f"{msg}"})
+  print(bericht)
   newMsg.write(msgData)
   newMsg.write(data)
   newMsg.close()
 
 
 def moderate():
-  msg = open("ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'r')
+  msg = open("SchoolHU1/ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'r')
   # userMsgLines = msg.readlines()
   msgString = msg.readline()
   print(msgString)
@@ -29,13 +32,13 @@ def moderate():
   modVerdict = input('accept msg? ')
 
   if modVerdict == 'accept':
-    msgAppend = open("ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'a')
+    msgAppend = open("SchoolHU1/ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'a')
     msgAppend.write('Accepted')
     print('Accepted')
     msg.close()
     
   elif modVerdict == 'reject':
-    msgAppend = open("ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'a')
+    msgAppend = open("SchoolHU1/ProgBlokA/twitterCasus/generated/tweetbericht.txt", 'a')
     msgAppend.write('Rejected')
     print('Rejected')
     msg.close()
